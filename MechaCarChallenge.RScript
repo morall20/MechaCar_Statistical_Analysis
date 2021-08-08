@@ -1,0 +1,45 @@
+### DELIVERABLE 1
+
+library(dplyr)
+
+
+speed <- read.csv(file='../Resources/MechaCar_mpg.csv',check.names=F,stringsAsFactors = F) 
+library(tidyverse)
+lm(mpg ~ vehicle_length + vehicle_weight + spoiler_angle + ground_clearance + AWD, data=speed)
+
+summary(lm(mpg ~ vehicle_length + vehicle_weight + spoiler_angle + ground_clearance + AWD, data=speed)) 
+
+lm(mpg ~ vehicle_length + ground_clearance, data=speed)
+summary(lm(mpg ~ vehicle_length + ground_clearance, data=speed)) 
+
+
+
+### DELIVERABLE 2
+
+Suspens <- read.csv(file='./Resources/Suspension_Coil.csv',check.names=F,stringsAsFactors = F) 
+
+total_summary <- Suspens %>% summarize(Mean_PSI=mean(PSI),
+                                          Median_PSI=median(PSI),
+                                          Var_PSI=var(PSI),
+                                          Std_Dev_PSI=sd(PSI),
+                                          Num_Coil=n(), .groups = 'keep') 
+                                                               
+lot_summary <- Suspens  %>% group_by(Manufacturing_Lot) %>% summarize(Mean_PSI=mean(PSI),
+                                          Median_PSI=median(PSI),
+                                          Var_PSI=var(PSI),
+                                          Std_Dev_PSI=sd(PSI),
+                                          Num_Coil=n(), .groups = 'keep')                                      
+
+
+### DELIVERABLE 3
+
+t.test(Suspens$PSI,mu=1500)
+
+lot1 <- subset(Suspens, Manufacturing_Lot=="Lot1")
+lot2 <- subset(Suspens, Manufacturing_Lot=="Lot2")
+lot3 <- subset(Suspens, Manufacturing_Lot=="Lot3")
+
+t.test(lot1$PSI,mu=1500)
+t.test(lot2$PSI,mu=1500)
+t.test(lot3$PSI,mu=1500)
+
